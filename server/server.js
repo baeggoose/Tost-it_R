@@ -32,3 +32,12 @@ app.get("/add", async (req, res) => {
     res.status(500).send("데이터 추가 중 오류 발생");
   }
 });
+
+app.get("/todo", async (req, res) => {
+  try {
+    let result = await db.collection("todo").find().toArray();
+    res.json(result);
+  } catch (err) {
+    res.status(500).send("데이터 가져오기 중 오류 발생");
+  }
+});
