@@ -66,3 +66,14 @@ app.get("/edit", async (req, res) => {
     res.status(500).send("할일 수정 중 오류 발생");
   }
 });
+
+app.get("/delete", async (req, res) => {
+  try {
+    let result = await db.collection("todo").deleteOne({
+      _id: new ObjectId("66c9e2f7320af73ee3969ee9"),
+    });
+    res.redirect("/todo");
+  } catch (err) {
+    res.status(500).send("할일 삭제 중 오류 발생");
+  }
+});
