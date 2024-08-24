@@ -21,9 +21,14 @@ new MongoClient(url)
   });
 
 app.get("/", (req, res) => {
-  res.send("express!!");
+  res.json("express!!");
 });
 
-app.get("/todo", () => {
-  db.collection("todo").insertOne({ title: "mongoDB 셋팅" });
+app.get("/add", async (req, res) => {
+  try {
+    await db.collection("todo").insertOne({ title: "mongoDB 셋팅" });
+    res.send("데이터가 성공적으로 추가되었습니다.");
+  } catch (err) {
+    res.status(500).send("데이터 추가 중 오류 발생");
+  }
 });
