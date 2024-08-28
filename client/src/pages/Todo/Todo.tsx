@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { baseURL } from "../../utils/apiConfig";
 
 interface TodoItem {
   _id: string;
   title: string;
-  content?: string;
 }
 
 const Todo: React.FC = () => {
@@ -11,7 +11,7 @@ const Todo: React.FC = () => {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:8080/todo");
+      const response = await fetch(`${baseURL}/todo`);
       const data = await response.json();
       console.log(data);
       setTodo(data);
@@ -29,8 +29,7 @@ const Todo: React.FC = () => {
         오늘 할일
         {todo.map((todo) => (
           <li key={todo._id}>
-            <h3>{todo.title}</h3>
-            <p>{todo.content}</p>
+            <p>{todo.title}</p>
           </li>
         ))}
       </ul>

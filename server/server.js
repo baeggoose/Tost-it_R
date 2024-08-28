@@ -1,8 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const { MongoClient } = require("mongodb");
 const { ObjectId } = require("mongodb");
 require("dotenv").config();
+
+app.use(cors());
 
 let db;
 const url = process.env.DB_URL;
