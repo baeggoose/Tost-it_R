@@ -6,6 +6,7 @@ const { ObjectId } = require("mongodb");
 require("dotenv").config();
 
 app.use(cors());
+app.use(express.json());
 
 let db;
 const url = process.env.DB_URL;
@@ -28,12 +29,18 @@ app.get("/", (req, res) => {
   res.json("express!!");
 });
 
-app.get("/add", async (req, res) => {
+app.post("/add", async (req, res) => {
   try {
-    await db.collection("todo").insertOne({ title: "mongoDB 셋팅" });
-    res.send("데이터가 성공적으로 추가되었습니다.");
+    const { todo, category } = req.body;
+    const result = await db
+      .collection("todo")
+      .insertOne({ title: todo, category });
+    const newTodo = await db
+      .collection("todo")
+      .findOne({ _id: result.insertedId });
+    res.status(201).json(newTodo);
   } catch (err) {
-    res.status(500).send("할일 추가 중 오류 발생");
+    res.status(500).send("할 일 추가 중 오류 발생");
   }
 });
 
