@@ -111,6 +111,24 @@ const Todo: React.FC = () => {
   ) => {
     setEditingTodoText(e.target.value);
   };
+  const handleDeleteTodo = async (id: string) => {
+    try {
+      const response = await fetch(`${baseURL}/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setTodo((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
+      } else {
+        console.error("할일 삭제 중 오류 발생");
+      }
+    } catch (error) {
+      console.error("데이터 삭제 중 오류 발생", error);
+    }
+  };
 
   return (
     <>
@@ -127,12 +145,18 @@ const Todo: React.FC = () => {
                 <button onClick={() => handleSaveEditTodo(todo._id)}>
                   저장체크아이콘
                 </button>
+                <button onClick={() => setEditingTodoId(null)}>
+                  저장취소아이콘
+                </button>
               </>
             ) : (
               <>
                 <p>{todo.title}</p>
                 <button onClick={() => handleEditTodo(todo._id, todo.title)}>
                   수정아이콘
+                </button>
+                <button onClick={() => handleDeleteTodo(todo._id)}>
+                  삭제아이콘
                 </button>
               </>
             )}

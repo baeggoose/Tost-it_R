@@ -82,12 +82,18 @@ app.put("/edit/:id", async (req, res) => {
   }
 });
 
-app.get("/delete", async (req, res) => {
+app.delete("/delete/:id", async (req, res) => {
   try {
-    let result = await db.collection("todo").deleteOne({
-      _id: new ObjectId("66c9e2f7320af73ee3969ee9"),
+    const { id } = req.params;
+    const result = await db.collection("todo").deleteOne({
+      _id: new ObjectId(id),
     });
-    res.redirect("/todo");
+
+    if (result.deletedCount > 0) {
+      res.status(200).send("할일이 성공적으로 삭제되었습니다.");
+    } else {
+      res.status(404).send("할일을 찾을 수 없습니다.");
+    }
   } catch (err) {
     res.status(500).send("할일 삭제 중 오류 발생");
   }
