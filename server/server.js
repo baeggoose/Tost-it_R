@@ -40,7 +40,7 @@ app.post("/add", async (req, res) => {
       .findOne({ _id: result.insertedId });
     res.status(201).json(newTodo);
   } catch (err) {
-    res.status(500).send("할 일 추가 중 오류 발생");
+    res.status(500).send("할일 추가 중 서버 오류 발생");
   }
 });
 
@@ -49,29 +49,34 @@ app.get("/todo", async (req, res) => {
     let result = await db.collection("todo").find().toArray();
     res.json(result);
   } catch (err) {
-    res.status(500).send("할일 불러오기 중 오류 발생");
+    res.status(500).send("할일 불러오기 중 서버 오류 발생");
   }
 });
 
-app.get("/edit/:id", async (req, res) => {
+app.put("/edit/:id", async (req, res) => {
   try {
-    let result = await db
+    const { title } = req.body;
+
+    const todoItem = await db
       .collection("todo")
       .findOne({ _id: new ObjectId(req.params.id) });
-    res.json(result);
-  } catch (err) {
-    res.status(500).send("수정할 할일 불러오기 중 오류 발생");
-  }
-});
-app.get("/edit", async (req, res) => {
-  try {
-    let result = await db
+
+    if (!todoItem) {
+      return res.status(404).send("할 일을 찾을 수 없습니다.");
+    }
+
+    const result = await db
       .collection("todo")
-      .updateOne(
-        { _id: new ObjectId("66c9de1f3f1cbd90e280b36a") },
-        { $set: { title: "할일 수정", content: "수정되는지 테스트" } }
-      );
-    res.redirect("/todo");
+      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: { title } });
+
+    if (result.modifiedCount > 0) {
+      const updatedTodo = await db
+        .collection("todo")
+        .findOne({ _id: new ObjectId(req.params.id) });
+      res.json(updatedTodo);
+    } else {
+      res.status(404).send("할 일을 찾을 수 없습니다.");
+    }
   } catch (err) {
     res.status(500).send("할일 수정 중 오류 발생");
   }

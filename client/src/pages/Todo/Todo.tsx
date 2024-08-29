@@ -8,8 +8,10 @@ interface TodoItem {
 
 const Todo: React.FC = () => {
   const [todo, setTodo] = useState<TodoItem[]>([]);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [todoText, setTodoText] = useState("");
+  const [editingTodoId, setEditingTodoId] = useState<string | null>(null); // 현재 수정 중인 할 일의 ID
+  const [editingTodoText, setEditingTodoText] = useState<string>(""); // 수정 중인 할 일의 텍스트
 
   const fetchTodos = async () => {
     try {
@@ -17,7 +19,7 @@ const Todo: React.FC = () => {
       const data = await response.json();
       setTodo(data);
     } catch (error) {
-      console.error("데이터 불러오기 중 오류 발생", error);
+      console.error("할일 불러오기 중 오류 발생", error);
     }
   };
 
@@ -28,7 +30,7 @@ const Todo: React.FC = () => {
   const handleAddTodo = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedOption === "") {
+    if (selectedCategory === "") {
       alert("언제할지 선택해주세요");
       return;
     }
@@ -46,7 +48,7 @@ const Todo: React.FC = () => {
         },
         body: JSON.stringify({
           todo: todoText,
-          category: selectedOption,
+          category: selectedCategory,
         }),
       });
 
@@ -55,7 +57,7 @@ const Todo: React.FC = () => {
         alert("할 일이 추가되었습니다.");
         setTodo([...todo, newTodo]);
         setTodoText("");
-        setSelectedOption("");
+        setSelectedCategory("");
       } else {
         console.error("할일 추가 중 오류 발생");
       }
@@ -65,10 +67,49 @@ const Todo: React.FC = () => {
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(e.target.value);
+    setSelectedCategory(e.target.value);
   };
   const handleTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(e.target.value);
+  };
+
+  const handleEditTodo = (id: string, title: string) => {
+    setEditingTodoId(id);
+    setEditingTodoText(title);
+  };
+
+  const handleSaveEditTodo = async (id: string) => {
+    try {
+      const response = await fetch(`${baseURL}/edit/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: editingTodoText,
+        }),
+      });
+
+      if (response.ok) {
+        const updatedTodo = await response.json();
+        setTodo((prevTodos) =>
+          prevTodos.map((todo) =>
+            todo._id === id ? { ...todo, title: updatedTodo.title } : todo
+          )
+        );
+        setEditingTodoId(null);
+      } else {
+        console.error("할일 수정 중 오류 발생");
+      }
+    } catch (error) {
+      console.error("데이터 수정 중 오류 발생", error);
+    }
+  };
+
+  const handleChangeEditTodoText = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setEditingTodoText(e.target.value);
   };
 
   return (
@@ -77,12 +118,29 @@ const Todo: React.FC = () => {
         오늘 할일
         {todo.map((todo) => (
           <li key={todo._id}>
-            <p>{todo.title}</p>
+            {editingTodoId === todo._id ? (
+              <>
+                <textarea
+                  value={editingTodoText}
+                  onChange={handleChangeEditTodoText}
+                />
+                <button onClick={() => handleSaveEditTodo(todo._id)}>
+                  저장체크아이콘
+                </button>
+              </>
+            ) : (
+              <>
+                <p>{todo.title}</p>
+                <button onClick={() => handleEditTodo(todo._id, todo.title)}>
+                  수정아이콘
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>
       <form onSubmit={handleAddTodo}>
-        <select onChange={handleSelect} value={selectedOption}>
+        <select onChange={handleSelect} value={selectedCategory}>
           <option value="">언제할까요?</option>
           <option value="morning">아침</option>
           <option value="lunch">점심 </option>
@@ -95,8 +153,7 @@ const Todo: React.FC = () => {
           value={todoText}
           onChange={handleTodo}
         />
-        <button type="submit">할일 추가</button>
-        {/* 폰트어썸 + 아이콘 추가 */}
+        <button type="submit">할일추가아이콘</button>
       </form>
     </>
   );
