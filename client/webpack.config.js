@@ -28,6 +28,11 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /.css?$/,
+        exclude: [],
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
     ],
   },
   plugins: [
