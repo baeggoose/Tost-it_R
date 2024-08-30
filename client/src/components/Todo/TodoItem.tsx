@@ -29,7 +29,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   };
 
   return (
-    <li>
+    <li className="font-semibold tracking-widest relative h-fit">
       {isEditing ? (
         <>
           <textarea

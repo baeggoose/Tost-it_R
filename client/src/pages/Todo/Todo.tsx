@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import TodoForm from "../../components/Todo/TodoForm";
 import TodoList from "../../components/Todo/TodoList";
 import { fetchTodos, addTodo, editTodo, deleteTodo } from "../../API/todoAPI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 interface TodoItem {
   _id: string;
@@ -54,15 +56,40 @@ const Todo: React.FC = () => {
     }
   };
 
+  const handleRefresh = () => {
+    location.reload();
+  };
+
   return (
     <>
-      <h1>오늘 할일</h1>
-      <TodoList
-        todos={todos}
-        onSaveEditTodo={handleSaveEditTodo}
-        onDeleteTodo={handleDeleteTodo}
-      />
-      <TodoForm onAddTodo={handleAddTodo} />
+      <div className="bg-main_skyblue flex flex-col justify-center items-center h-screen">
+        <FontAwesomeIcon
+          icon={faHouse}
+          className="cursor-pointer mr-3 "
+          style={{ color: "#50b4fc" }}
+          size="xl"
+          onClick={handleRefresh}
+        />
+        <section className="bg-main_bg_cloud max-w-7xl w-98 rounded-xl h-600 relative">
+          <div className="sticky top-0 pb-5 rounded-t-xl bg-main_bg_cloud ">
+            <h1
+              className="font-mono pl-10 pt-9 text-3xl font-semibold cursor-pointer"
+              onClick={handleRefresh}
+            >
+              Today
+            </h1>
+            <p className="font-mono  pl-10 pt-3 text-sm">
+              What are you working on today?
+            </p>
+          </div>
+          <TodoList
+            todos={todos}
+            onSaveEditTodo={handleSaveEditTodo}
+            onDeleteTodo={handleDeleteTodo}
+          />
+        </section>
+        <TodoForm onAddTodo={handleAddTodo} />
+      </div>
     </>
   );
 };

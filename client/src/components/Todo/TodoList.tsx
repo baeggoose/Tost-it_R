@@ -13,7 +13,7 @@ const TodoList: React.FC<TodoListProps> = ({
   onDeleteTodo,
 }) => {
   return (
-    <ul>
+    <ul className="h-fit max-h-450 pt-5 pb-5 pr-10 pl-10 grid grid-cols-2 gap-4 overflow-y-scroll">
       {todos.map((todo) => (
         <TodoItem
           key={todo._id}
