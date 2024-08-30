@@ -8,6 +8,7 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 interface TodoItem {
   _id: string;
   title: string;
+  category: string;
 }
 
 const Todo: React.FC = () => {

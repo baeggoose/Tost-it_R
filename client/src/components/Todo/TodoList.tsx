@@ -2,7 +2,7 @@ import React from "react";
 import TodoItem from "./TodoItem";
 
 interface TodoListProps {
-  todos: { _id: string; title: string }[];
+  todos: { _id: string; title: string; category: string }[];
   onSaveEditTodo: (id: string, newTitle: string) => void;
   onDeleteTodo: (id: string) => void;
 }
