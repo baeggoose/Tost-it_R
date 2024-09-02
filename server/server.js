@@ -15,6 +15,21 @@ app.use(express.json());
 const url = process.env.DB_URL;
 let db;
 
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+
+app.use(passport.initialize());
+app.use(
+  session({
+    secret: "암호화에 쓸 비번",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.session());
+
 MongoClient.connect(url)
   .then((client) => {
     console.log("DB연결성공");
@@ -24,6 +39,14 @@ MongoClient.connect(url)
     const todoController = new TodoController(todoModel);
 
     app.use("/", todoRoutes(todoController));
+
+    app.post("/register", async (req, res) => {
+      await db.collection("user").insertOne({
+        username: req.body.username,
+        password: req.body.password,
+      });
+      res.send("register success");
+    });
 
     app.listen(8000, () => {
       console.log("http://localhost:8000 에서 서버 실행중");
