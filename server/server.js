@@ -41,6 +41,7 @@ MongoClient.connect(url)
     app.use("/", todoRoutes(todoController));
 
     app.post("/register", async (req, res) => {
+      console.log(req.body);
       await db.collection("user").insertOne({
         username: req.body.username,
         password: req.body.password,
