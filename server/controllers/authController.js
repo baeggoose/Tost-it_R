@@ -1,4 +1,17 @@
 const bcrypt = require("bcrypt");
+const passport = require("passport");
+
+exports.loginUser = (req, res, next) => {
+  passport.authenticate("local", (error, user, info) => {
+    if (error) return res.status(500).json({ message: error.message });
+    if (!user) return res.status(401).json({ message: info.message });
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      return res.status(200).json({ message: "로그인 성공", user });
+    });
+  })(req, res, next);
+};
 
 exports.registerUser = async (req, res) => {
   const { username, password } = req.body;

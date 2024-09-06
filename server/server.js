@@ -49,12 +49,12 @@ MongoClient.connect(url)
         try {
           const user = await db.collection("user").findOne({ username });
           if (!user) {
-            return done(null, false, { message: "아이디 DB에 없음" });
+            return done(null, false, { message: "없는 아이디입니다" });
           }
 
           const isMatch = await bcrypt.compare(password, user.password);
           if (!isMatch) {
-            return done(null, false, { message: "비번불일치" });
+            return done(null, false, { message: "비밀번호 불일치" });
           }
 
           return done(null, user);
@@ -80,20 +80,7 @@ MongoClient.connect(url)
       }
     });
 
-    // 로그인 라우트
-    app.post("/login", (req, res, next) => {
-      passport.authenticate("local", (error, user, info) => {
-        if (error) return res.status(500).json({ message: error.message });
-        if (!user) return res.status(401).json({ message: info.message });
-
-        req.logIn(user, (err) => {
-          if (err) return next(err);
-          return res.status(200).json({ message: "로그인 성공", user });
-        });
-      })(req, res, next);
-    });
-
-    // 회원가입 라우트
+    // 로그인, 회원가입 라우트
     app.use("/auth", authRoutes);
 
     // 할일 관련 라우트
