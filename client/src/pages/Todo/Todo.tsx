@@ -21,7 +21,7 @@ const Todo: React.FC = () => {
         const data = await fetchTodos();
         setTodos(data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching todos:", error);
       }
     };
     loadTodos();
