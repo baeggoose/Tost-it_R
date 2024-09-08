@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+import {
+  faCheck,
+  faPenToSquare,
+  faTrashCan,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, KeyboardEvent } from "react";
 
 interface TodoItemProps {
   todo: { _id: string; title: string; category: string };
@@ -45,6 +52,13 @@ const TodoItem: React.FC<TodoItemProps> = ({
     setEditingText(todo.title);
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSaveClick();
+    }
+  };
+
   return (
     <li
       className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black break-all z-10 ${getCategoryColor(
@@ -56,16 +70,41 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <textarea
             value={editingText}
             onChange={(e) => setEditingText(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="w-full h-24 bg-transparent tracking-widest resize-none"
           />
-          <button onClick={handleSaveClick}>저장체크아이콘</button>
-          <button onClick={handleCancelClick}>취소아이콘</button>
+          <button onClick={handleSaveClick}>
+            <FontAwesomeIcon
+              icon={faCheck}
+              className="cursor-pointer hover:opacity-80 absolute right-1.5 bottom-1.5"
+              opacity={0.2}
+            />
+          </button>
+          <button onClick={handleCancelClick}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className="cursor-pointer hover:opacity-80 absolute left-1.5 bottom-1.5"
+              opacity={0.2}
+            />
+          </button>
         </>
       ) : (
         <>
           <p>{todo.title}</p>
-          <button onClick={handleEditClick}>수정아이콘</button>
-          <button onClick={() => onDeleteTodo(todo._id)}>삭제아이콘</button>
+          <button onClick={handleEditClick}>
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              className="cursor-pointer hover:opacity-80 absolute left-1.5 bottom-1.5"
+              opacity={0.2}
+            />
+          </button>
+          <button onClick={() => onDeleteTodo(todo._id)}>
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              className="cursor-pointer hover:opacity-80 absolute right-1.5 bottom-1.5"
+              opacity={0.2}
+            />
+          </button>
         </>
       )}
     </li>
