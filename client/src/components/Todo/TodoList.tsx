@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 
 interface TodoListProps {
   todos: { _id: string; title: string; category: string }[];
-  onSaveEditTodo: (id: string, newTitle: string) => void;
+  onSaveEditTodo: (id: string, newTitle: string, newCategory: string) => void;
   onDeleteTodo: (id: string) => void;
 }
 

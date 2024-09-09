@@ -29,13 +29,20 @@ export const addTodo = async (todoText: string, selectedCategory: string) => {
 };
 
 // 할일 수정하기
-export const editTodo = async (id: string, editingTodoText: string) => {
+export const editTodo = async (
+  id: string,
+  editingTodoText: string,
+  selectedCategory: string
+) => {
   const response = await fetch(`${baseURL}/todos/edit/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ title: editingTodoText }),
+    body: JSON.stringify({
+      title: editingTodoText,
+      category: selectedCategory,
+    }),
   });
 
   if (!response.ok) {

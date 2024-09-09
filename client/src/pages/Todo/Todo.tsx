@@ -38,12 +38,22 @@ const Todo: React.FC = () => {
     }
   };
 
-  const handleSaveEditTodo = async (id: string, newTitle: string) => {
+  const handleSaveEditTodo = async (
+    id: string,
+    newTitle: string,
+    newCategory: string
+  ) => {
     try {
-      const updatedTodo = await editTodo(id, newTitle);
+      const updatedTodo = await editTodo(id, newTitle, newCategory);
       setTodos((prevTodos) =>
         prevTodos.map((todo) =>
-          todo._id === id ? { ...todo, title: updatedTodo.title } : todo
+          todo._id === id
+            ? {
+                ...todo,
+                title: updatedTodo.title,
+                category: updatedTodo.category,
+              }
+            : todo
         )
       );
     } catch (error) {

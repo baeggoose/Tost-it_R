@@ -1,18 +1,16 @@
+import React, { useState, KeyboardEvent } from "react";
 import {
   faCheck,
   faEllipsis,
-  faEllipsisVertical,
   faPenToSquare,
-  faSquareCheck,
   faTrashCan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, KeyboardEvent } from "react";
 
 interface TodoItemProps {
   todo: { _id: string; title: string; category: string };
-  onSaveEditTodo: (id: string, newTitle: string) => void;
+  onSaveEditTodo: (id: string, newTitle: string, newCategory: string) => void;
   onDeleteTodo: (id: string) => void;
 }
 
@@ -23,7 +21,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState(todo.title);
+  const [selectedCategory, setSelectedCategory] = useState(todo.category);
   const [isDone, setIsDone] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -37,27 +37,48 @@ const TodoItem: React.FC<TodoItemProps> = ({
         return "bg-gray-500";
     }
   };
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case "morning":
+        return "아침";
+      case "lunch":
+        return "점심";
+      case "dinner":
+        return "저녁";
+      default:
+        return category;
+    }
+  };
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleCategoryClick = () => {
-    // 아침,점심,저녁 수정 요청
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleCategorySelect = (newCategory: string) => {
+    setSelectedCategory(newCategory);
+    setIsDropdownOpen(false);
   };
 
   const handleSaveClick = () => {
-    if (editingText.trim() === todo.title) {
+    if (
+      editingText.trim() === todo.title &&
+      selectedCategory === todo.category
+    ) {
       setIsEditing(false);
       return;
     }
-    onSaveEditTodo(todo._id, editingText);
+    onSaveEditTodo(todo._id, editingText, selectedCategory);
     setIsEditing(false);
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
     setEditingText(todo.title);
+    setSelectedCategory(todo.category);
   };
 
   const handleDoneToggle = () => {
@@ -74,7 +95,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   return (
     <li
       className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black break-all z-10 ${getCategoryColor(
-        todo.category
+        selectedCategory
       )}`}
     >
       {isEditing ? (
@@ -92,13 +113,26 @@ const TodoItem: React.FC<TodoItemProps> = ({
               opacity={0.2}
             />
           </button>
-          <button onClick={handleCategoryClick}>
+          <button onClick={toggleDropdown}>
             <FontAwesomeIcon
               icon={faEllipsis}
               className="cursor-pointer hover:opacity-80 absolute right-7 bottom-1.5"
               opacity={0.2}
             />
           </button>
+          {isDropdownOpen && (
+            <div className="absolute bottom-7 bg-white border rounded shadow-lg p-1">
+              {["morning", "lunch", "dinner"].map((category) => (
+                <button
+                  key={category}
+                  onClick={() => handleCategorySelect(category)}
+                  className=" hover:bg-gray-100"
+                >
+                  {getCategoryLabel(category)}
+                </button>
+              ))}
+            </div>
+          )}
           <button onClick={handleCancelClick}>
             <FontAwesomeIcon
               icon={faXmark}

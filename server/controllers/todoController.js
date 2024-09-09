@@ -24,8 +24,12 @@ class TodoController {
 
   updateTodo = async (req, res) => {
     try {
-      const { title } = req.body;
-      const updatedTodo = await this.todoModel.updateTodo(req.params.id, title);
+      const { title, category } = req.body;
+      const updatedTodo = await this.todoModel.updateTodo(
+        req.params.id,
+        title,
+        category
+      );
       if (updatedTodo) {
         res.json(updatedTodo);
       } else {

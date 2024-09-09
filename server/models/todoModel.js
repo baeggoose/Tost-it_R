@@ -14,10 +14,14 @@ class TodoModel {
     return this.collection.find().toArray();
   }
 
-  async updateTodo(id, title) {
+  async updateTodo(id, title, category) {
+    const updateFields = {};
+    if (title) updateFields.title = title;
+    if (category) updateFields.category = category;
+
     const result = await this.collection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: { title } }
+      { $set: updateFields }
     );
     return result.modifiedCount > 0
       ? this.collection.findOne({ _id: new ObjectId(id) })
