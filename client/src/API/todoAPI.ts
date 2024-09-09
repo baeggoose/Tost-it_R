@@ -2,7 +2,13 @@ import { baseURL } from "../utils/apiConfig";
 
 // 할일 목록 가져오기
 export const fetchTodos = async () => {
-  const response = await fetch(`${baseURL}/todos`);
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(`${baseURL}/todos`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   if (!response.ok) {
     throw new Error("할일 불러오기 중 오류 발생");
   }
