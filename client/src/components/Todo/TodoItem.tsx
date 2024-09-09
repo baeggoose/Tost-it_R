@@ -28,11 +28,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "morning":
-        return "bg-red-400";
+        return "bg-red-300";
       case "lunch":
         return "bg-yellow-300";
       case "dinner":
-        return "bg-blue-500";
+        return "bg-blue-400";
       default:
         return "bg-gray-500";
     }
