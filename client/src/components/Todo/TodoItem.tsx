@@ -1,6 +1,9 @@
 import {
   faCheck,
+  faEllipsis,
+  faEllipsisVertical,
   faPenToSquare,
+  faSquareCheck,
   faTrashCan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +23,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState(todo.title);
+  const [isDone, setIsDone] = useState(false);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -38,6 +42,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
     setIsEditing(true);
   };
 
+  const handleCategoryClick = () => {
+    // 아침,점심,저녁 수정 요청
+  };
+
   const handleSaveClick = () => {
     if (editingText.trim() === todo.title) {
       setIsEditing(false);
@@ -50,6 +58,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const handleCancelClick = () => {
     setIsEditing(false);
     setEditingText(todo.title);
+  };
+
+  const handleDoneToggle = () => {
+    setIsDone(!isDone);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -80,6 +92,13 @@ const TodoItem: React.FC<TodoItemProps> = ({
               opacity={0.2}
             />
           </button>
+          <button onClick={handleCategoryClick}>
+            <FontAwesomeIcon
+              icon={faEllipsis}
+              className="cursor-pointer hover:opacity-80 absolute right-7 bottom-1.5"
+              opacity={0.2}
+            />
+          </button>
           <button onClick={handleCancelClick}>
             <FontAwesomeIcon
               icon={faXmark}
@@ -90,21 +109,29 @@ const TodoItem: React.FC<TodoItemProps> = ({
         </>
       ) : (
         <>
-          <p>{todo.title}</p>
-          <button onClick={handleEditClick}>
-            <FontAwesomeIcon
-              icon={faPenToSquare}
-              className="cursor-pointer hover:opacity-80 absolute left-1.5 bottom-1.5"
-              opacity={0.2}
-            />
-          </button>
-          <button onClick={() => onDeleteTodo(todo._id)}>
-            <FontAwesomeIcon
-              icon={faTrashCan}
-              className="cursor-pointer hover:opacity-80 absolute right-1.5 bottom-1.5"
-              opacity={0.2}
-            />
-          </button>
+          <p className={isDone ? "line-through" : ""}>{todo.title}</p>
+          {isDone ? (
+            <button onClick={() => onDeleteTodo(todo._id)}>
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                className="cursor-pointer hover:opacity-80 absolute left-1.5 bottom-1.5"
+                opacity={0.2}
+              />
+            </button>
+          ) : (
+            <button onClick={handleEditClick}>
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                className="cursor-pointer hover:opacity-80 absolute left-1.5 bottom-1.5"
+                opacity={0.2}
+              />
+            </button>
+          )}
+          <input
+            onClick={handleDoneToggle}
+            type="checkbox"
+            className="form-checkbox h-4 w-4 cursor-pointer absolute right-1.5 bottom-1.5 text-blue-600 rounded-sm border-gray-300 focus:ring-blue-500"
+          ></input>
         </>
       )}
     </li>
