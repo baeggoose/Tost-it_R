@@ -65,7 +65,9 @@ MongoClient.connect(url)
     );
 
     passport.serializeUser((user, done) => {
-      done(null, { id: user._id, username: user.username });
+      process.nextTick(() => {
+        done(null, { id: user._id, username: user.username });
+      });
     });
 
     passport.deserializeUser(async (user, done) => {
@@ -74,7 +76,9 @@ MongoClient.connect(url)
           .collection("user")
           .findOne({ _id: new ObjectId(user.id) });
         delete result.password;
-        done(null, result);
+        process.nextTick(() => {
+          return done(null, result);
+        });
       } catch (error) {
         done(error);
       }

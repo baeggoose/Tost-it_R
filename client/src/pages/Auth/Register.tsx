@@ -14,7 +14,7 @@ function Register() {
       console.log(response);
       navigate("/login");
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   };
 

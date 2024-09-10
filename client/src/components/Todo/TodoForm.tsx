@@ -97,7 +97,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onAddTodo }) => {
           type="text"
           className="m-4 w-64 rounded-md shadow bg-point_blue font-normal p-2 pr-10 placeholder-white"
           placeholder="할 일을 입력해주세요"
-          maxLength={37}
+          maxLength={32}
           value={todoText}
           onChange={handleTodo}
         />

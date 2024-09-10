@@ -102,6 +102,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         <>
           <textarea
             value={editingText}
+            maxLength={32}
             onChange={(e) => setEditingText(e.target.value)}
             onKeyDown={handleKeyDown}
             className="w-full h-24 bg-transparent tracking-widest resize-none"

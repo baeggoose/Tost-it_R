@@ -4,7 +4,11 @@ import TodoForm from "../../components/Todo/TodoForm";
 import TodoList from "../../components/Todo/TodoList";
 import { fetchTodos, addTodo, editTodo, deleteTodo } from "../../API/todoAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faRightFromBracket,
+  faAnglesDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { logoutUser } from "../../API/authAPI";
 
 interface TodoItem {
@@ -23,7 +27,7 @@ const Todo: React.FC = () => {
         const data = await fetchTodos();
         setTodos(data);
       } catch (error) {
-        console.error("Error fetching todos:", error);
+        console.error(error);
       }
     };
     loadTodos();
@@ -120,6 +124,13 @@ const Todo: React.FC = () => {
             onSaveEditTodo={handleSaveEditTodo}
             onDeleteTodo={handleDeleteTodo}
           />
+          {/* 할일이 6개 이상일 때 아래로 향하는 아이콘 표시 */}
+          {todos.length > 6 && (
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+              <FontAwesomeIcon icon={faAnglesDown} />
+              {/* className="animate-bounce text-gray-500" /> */}
+            </div>
+          )}
         </section>
         <TodoForm onAddTodo={handleAddTodo} />
       </div>

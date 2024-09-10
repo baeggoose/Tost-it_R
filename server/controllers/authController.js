@@ -16,11 +16,11 @@ exports.loginUser = (req, res, next) => {
 exports.logoutUser = (req, res) => {
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ message: "로그아웃 중 오류 발생" });
+      return res.status(500).json({ message: "로그아웃 중 서버 오류 발생" });
     }
     req.session.destroy((err) => {
       if (err) {
-        return res.status(500).json({ message: "세션 삭제 중 오류 발생" });
+        return res.status(500).json({ message: "세션 삭제 중 서버 오류 발생" });
       }
       res.status(200).json({ message: "로그아웃 성공" });
     });
@@ -36,9 +36,9 @@ exports.registerUser = async (req, res) => {
       username,
       password: hashedPassword,
     });
-    res.status(201).send("회원가입 성공");
+    res.status(201).json({ message: "회원가입 성공", user });
   } catch (error) {
     console.error(error);
-    res.status(500).send("회원가입 중 서버 오류 발생");
+    res.status(500).json({ message: "회원가입 중 서버 오류 발생", user });
   }
 };
