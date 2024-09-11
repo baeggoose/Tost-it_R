@@ -23,6 +23,7 @@ export const logoutUser = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -37,11 +38,14 @@ export const registerUser = async (username: string, password: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ username, password }),
+    credentials: "include",
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to register");
+    throw new Error(data.message || "Failed to register");
   }
 
-  return await response.json();
+  return data;
 };
