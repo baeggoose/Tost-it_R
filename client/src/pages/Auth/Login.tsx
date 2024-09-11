@@ -14,7 +14,7 @@ function Login() {
     try {
       const user = await loginUser(username, password);
       console.log("로그인 성공:", user);
-      navigate("/");
+      navigate("/todos");
     } catch (error) {
       setError("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
     }

@@ -5,9 +5,7 @@ export const fetchTodos = async () => {
   const token = localStorage.getItem("access_token");
 
   const response = await fetch(`${baseURL}/todos`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include",
   });
   if (!response.ok) {
     throw new Error("할일 불러오기 중 오류 발생");
@@ -26,6 +24,7 @@ export const addTodo = async (todoText: string, selectedCategory: string) => {
       todo: todoText,
       category: selectedCategory,
     }),
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -49,6 +48,7 @@ export const editTodo = async (
       title: editingTodoText,
       category: selectedCategory,
     }),
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -62,6 +62,7 @@ export const deleteTodo = async (id: string) => {
   const response = await fetch(`${baseURL}/todos/delete/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
   });
 
   if (!response.ok) {

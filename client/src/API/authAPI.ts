@@ -7,14 +7,13 @@ export const loginUser = async (username: string, password: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ username, password }),
+    credentials: "include",
   });
 
   if (!response.ok) {
     throw new Error("Failed to login");
   }
   const data = await response.json();
-
-  localStorage.setItem("access_token", data.token);
 
   return data;
 };
@@ -29,8 +28,6 @@ export const logoutUser = async () => {
   if (!response.ok) {
     throw new Error("Failed to logout");
   }
-
-  localStorage.removeItem("access_token");
 };
 
 export const registerUser = async (username: string, password: string) => {

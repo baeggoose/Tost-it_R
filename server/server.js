@@ -11,7 +11,12 @@ const todoRoutes = require("./routes/todoRoutes");
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:9000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const url = process.env.DB_URL;
@@ -24,10 +29,15 @@ const LocalStrategy = require("passport-local");
 app.use(passport.initialize());
 app.use(
   session({
-    secret: "암호화에 쓸 비번",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 1000 },
+    cookie: {
+      maxAge: 60 * 60 * 1000, // 1시간
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+    },
   })
 );
 

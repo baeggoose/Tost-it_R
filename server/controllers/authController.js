@@ -22,6 +22,7 @@ exports.logoutUser = (req, res) => {
       if (err) {
         return res.status(500).json({ message: "세션 삭제 중 서버 오류 발생" });
       }
+      res.clearCookie("connect.sid");
       res.status(200).json({ message: "로그아웃 성공" });
     });
   });

@@ -33,6 +33,22 @@ module.exports = {
         exclude: [],
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack"],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "assets/images",
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

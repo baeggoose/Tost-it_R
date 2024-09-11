@@ -5,16 +5,20 @@ class TodoModel {
     this.collection = db.collection("todo");
   }
 
-  async addTodo(todo, category) {
-    const result = await this.collection.insertOne({ title: todo, category });
+  async addTodo(todo, category, userId) {
+    const result = await this.collection.insertOne({
+      title: todo,
+      category,
+      userId,
+    });
     return this.collection.findOne({ _id: result.insertedId });
   }
 
-  async getTodos() {
-    return this.collection.find().toArray();
+  async getTodos(userId) {
+    return this.collection.find({ userId }).toArray();
   }
 
-  async updateTodo(id, title, category) {
+  async updateTodo(id, title, category, userId) {
     const updateFields = {};
     if (title) updateFields.title = title;
     if (category) updateFields.category = category;

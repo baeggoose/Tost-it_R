@@ -6,7 +6,8 @@ class TodoController {
   addTodo = async (req, res) => {
     try {
       const { todo, category } = req.body;
-      const newTodo = await this.todoModel.addTodo(todo, category);
+      const userId = req.user._id;
+      const newTodo = await this.todoModel.addTodo(todo, category, userId);
       res.status(201).json(newTodo);
     } catch (err) {
       res.status(500).send("할일 추가 중 서버 오류 발생");
@@ -15,7 +16,8 @@ class TodoController {
 
   getTodos = async (req, res) => {
     try {
-      const todos = await this.todoModel.getTodos();
+      const userId = req.user._id;
+      const todos = await this.todoModel.getTodos(userId);
       res.json(todos);
     } catch (err) {
       res.status(500).send("할일 불러오기 중 서버 오류 발생");
@@ -36,7 +38,7 @@ class TodoController {
         res.status(404).send("할 일을 찾을 수 없습니다.");
       }
     } catch (err) {
-      res.status(500).send("할일 수정 중 오류 발생");
+      res.status(500).send("할일 수정 중 서버 오류 발생");
     }
   };
 
@@ -49,7 +51,7 @@ class TodoController {
         res.status(404).send("할일을 찾을 수 없습니다.");
       }
     } catch (err) {
-      res.status(500).send("할일 삭제 중 오류 발생");
+      res.status(500).send("할일 삭제 중 서버 오류 발생");
     }
   };
 }
