@@ -10,6 +10,7 @@ class TodoModel {
       title: todo,
       category,
       userId,
+      completed: false,
     });
     return this.collection.findOne({ _id: result.insertedId });
   }
@@ -26,6 +27,16 @@ class TodoModel {
     const result = await this.collection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updateFields }
+    );
+    return result.modifiedCount > 0
+      ? this.collection.findOne({ _id: new ObjectId(id) })
+      : null;
+  }
+
+  async updateTodoComplete(id, completed) {
+    const result = await this.collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { completed } }
     );
     return result.modifiedCount > 0
       ? this.collection.findOne({ _id: new ObjectId(id) })

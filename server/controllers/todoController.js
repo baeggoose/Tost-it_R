@@ -42,6 +42,24 @@ class TodoController {
     }
   };
 
+  toggleTodoComplete = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { completed } = req.body;
+      const updatedTodo = await this.todoModel.updateTodoComplete(
+        id,
+        completed
+      );
+      if (updatedTodo) {
+        res.json(updatedTodo);
+      } else {
+        res.status(404).send("할 일을 찾을 수 없습니다.");
+      }
+    } catch (err) {
+      res.status(500).send("할일 상태 변경 중 서버 오류 발생");
+    }
+  };
+
   deleteTodo = async (req, res) => {
     try {
       const deleted = await this.todoModel.deleteTodo(req.params.id);

@@ -2,15 +2,17 @@ import React from "react";
 import TodoItem from "./TodoItem";
 
 interface TodoListProps {
-  todos: { _id: string; title: string; category: string }[];
+  todos: { _id: string; title: string; category: string; completed: boolean }[];
   onSaveEditTodo: (id: string, newTitle: string, newCategory: string) => void;
   onDeleteTodo: (id: string) => void;
+  onToggleComplete: (id: string, completed: boolean) => void;
 }
 
 const TodoList: React.FC<TodoListProps> = ({
   todos,
   onSaveEditTodo,
   onDeleteTodo,
+  onToggleComplete,
 }) => {
   const categoryOrder = {
     morning: 1,
@@ -39,6 +41,7 @@ const TodoList: React.FC<TodoListProps> = ({
           todo={todo}
           onSaveEditTodo={onSaveEditTodo}
           onDeleteTodo={onDeleteTodo}
+          onToggleComplete={onToggleComplete}
         />
       ))}
     </ul>

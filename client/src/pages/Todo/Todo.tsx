@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TodoForm from "../../components/Todo/TodoForm";
 import TodoList from "../../components/Todo/TodoList";
-import { fetchTodos, addTodo, editTodo, deleteTodo } from "../../API/todoAPI";
+import {
+  fetchTodos,
+  addTodo,
+  editTodo,
+  deleteTodo,
+  toggleTodoComplete,
+} from "../../API/todoAPI";
 import { logoutUser } from "../../API/authAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,6 +21,7 @@ interface TodoItem {
   _id: string;
   title: string;
   category: string;
+  completed: boolean;
 }
 
 const Todo: React.FC = () => {
@@ -58,6 +65,19 @@ const Todo: React.FC = () => {
                 category: updatedTodo.category,
               }
             : todo
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleToggleComplete = async (id: string, completed: boolean) => {
+    try {
+      const updatedTodo = await toggleTodoComplete(id, completed);
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo._id === id ? { ...todo, completed: updatedTodo.completed } : todo
         )
       );
     } catch (error) {
@@ -122,6 +142,7 @@ const Todo: React.FC = () => {
             todos={todos}
             onSaveEditTodo={handleSaveEditTodo}
             onDeleteTodo={handleDeleteTodo}
+            onToggleComplete={handleToggleComplete}
           />
           {/* 할일이 6개 이상일 때 아래로 향하는 아이콘 표시 */}
           {todos.length > 6 && (

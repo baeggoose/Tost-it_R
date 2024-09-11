@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from "react";
+import React, { useState, KeyboardEvent, useEffect } from "react";
 import {
   faCheck,
   faEllipsis,
@@ -9,21 +9,27 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface TodoItemProps {
-  todo: { _id: string; title: string; category: string };
+  todo: { _id: string; title: string; category: string; completed: boolean };
   onSaveEditTodo: (id: string, newTitle: string, newCategory: string) => void;
   onDeleteTodo: (id: string) => void;
+  onToggleComplete: (id: string, completed: boolean) => void;
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
   todo,
   onSaveEditTodo,
   onDeleteTodo,
+  onToggleComplete,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState(todo.title);
   const [selectedCategory, setSelectedCategory] = useState(todo.category);
   const [isDone, setIsDone] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    setIsDone(todo.completed);
+  }, [todo.completed]);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -82,7 +88,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
   };
 
   const handleDoneToggle = () => {
-    setIsDone(!isDone);
+    const newIsDone = !isDone;
+    setIsDone(newIsDone);
+    onToggleComplete(todo._id, newIsDone);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -163,7 +171,8 @@ const TodoItem: React.FC<TodoItemProps> = ({
             </button>
           )}
           <input
-            onClick={handleDoneToggle}
+            checked={isDone}
+            onChange={handleDoneToggle}
             type="checkbox"
             className="form-checkbox h-4 w-4 cursor-pointer absolute right-1.5 bottom-1.5 text-blue-600 rounded-sm border-gray-300 focus:ring-blue-500"
           ></input>

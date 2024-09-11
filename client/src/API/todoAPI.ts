@@ -57,6 +57,23 @@ export const editTodo = async (
   return response.json();
 };
 
+// 할일 완료
+export const toggleTodoComplete = async (id: string, completed: boolean) => {
+  const response = await fetch(`${baseURL}/todos/toggle/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ completed }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to toggle todo complete status");
+  }
+
+  return response.json();
+};
+
 // 할일 삭제하기
 export const deleteTodo = async (id: string) => {
   const response = await fetch(`${baseURL}/todos/delete/${id}`, {
