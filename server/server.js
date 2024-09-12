@@ -4,6 +4,7 @@ const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const passport = require("passport");
+const path = require("path");
 const authRoutes = require("./routes/authRoutes");
 const todoRoutes = require("./routes/todoRoutes");
 const TodoModel = require("./models/todoModel");
@@ -12,6 +13,8 @@ const configurePassport = require("./config/passport");
 
 dotenv.config();
 const app = express();
+
+app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
@@ -61,8 +64,8 @@ MongoClient.connect(url)
     app.use("/todos", todoRoutes(todoController));
     app.use("/auth", authRoutes);
 
-    app.listen(8000, () => {
-      console.log("http://localhost:8000 에서 서버 실행중");
+    app.listen(8080, () => {
+      console.log("http://localhost:8080 에서 서버 실행중");
     });
   })
   .catch(console.error);
