@@ -13,10 +13,9 @@ export const loginUser = async (username: string, password: string) => {
   if (!response.ok) {
     throw new Error("Failed to login");
   }
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
+
 export const logoutUser = async () => {
   const response = await fetch(`${baseURL}/auth/logout`, {
     method: "POST",

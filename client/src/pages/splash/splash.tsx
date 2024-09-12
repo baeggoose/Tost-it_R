@@ -1,17 +1,33 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../utils/apiConfig";
 
 const Splash = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch(`${baseURL}/auth/check-session`, {
+          credentials: "include", // 쿠키가 포함된 요청을 보냅니다.
+        });
+        const data = await response.json();
+        if (data.isAuthenticated) {
+          navigate("/todos");
+        } else {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+        navigate("/login");
+      }
+    };
+
     const timer = setTimeout(() => {
-      navigate("/login");
+      checkSession();
     }, 2000);
 
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
