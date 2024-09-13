@@ -4,5 +4,11 @@
       "src": "/(.*)",
       "dest": "/dist/$1"
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "http://tost-it-env.eba-tdsgjw5g.ap-northeast-2.elasticbeanstalk.com/$1"
+    }
   ]
 }
