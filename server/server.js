@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
-    origin: "http://localhost:9000",
+    origin: "https://tost-it-r.vercel.app",
     credentials: true,
   })
 );
@@ -34,11 +34,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000, // 1시간
-      secure: false,
-      // secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",
-      // domain: "localhost",
     },
   })
 );
