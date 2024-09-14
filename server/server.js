@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
-    origin: "https://tost-it-r.vercel.app",
+    origin: "https://baeggoose.shop",
     credentials: true,
   })
 );
@@ -62,8 +62,12 @@ MongoClient.connect(url)
     app.use("/todos", todoRoutes(todoController));
     app.use("/auth", authRoutes);
 
-    app.listen(8080, () => {
-      console.log("http://localhost:8080 에서 서버 실행중");
+    const port = process.env.PORT || 8080;
+    app.listen(port, () => {
+      console.log(`서버 실행중 ${port}`);
     });
   })
-  .catch(console.error);
+  .catch((err) => {
+    console.error("Failed to connect to the database", err);
+    process.exit(1);
+  });
