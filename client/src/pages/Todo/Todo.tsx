@@ -34,7 +34,8 @@ const Todo: React.FC = () => {
         const data = await fetchTodos();
         setTodos(data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching loadTodos:", error);
+        navigate("/");
       }
     };
     loadTodos();
@@ -127,11 +128,8 @@ const Todo: React.FC = () => {
           />
         </aside>
         <section className="bg-main_bg_cloud max-w-7xl w-98 rounded-xl h-600 relative">
-          <div className="sticky top-0 pb-5 rounded-t-xl bg-main_bg_cloud ">
-            <h1
-              className="font-mono pl-10 pt-9 text-3xl font-semibold cursor-pointer"
-              onClick={handleRefresh}
-            >
+          <div className="sticky top-0 rounded-t-xl bg-main_bg_cloud ">
+            <h1 className="font-mono pl-10 pt-9 text-3xl font-semibold">
               Today
             </h1>
             <p className="font-mono  pl-10 pt-3 text-sm">

@@ -9,7 +9,7 @@ const Splash = () => {
     const checkSession = async () => {
       try {
         const response = await fetch(`${baseURL}/auth/check-session`, {
-          credentials: "include", // 쿠키가 포함된 요청을 보냅니다.
+          credentials: "include",
         });
         const data = await response.json();
         if (data.isAuthenticated) {

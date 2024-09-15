@@ -2,15 +2,18 @@ import { baseURL } from "../utils/apiConfig";
 
 // 할일 목록 가져오기
 export const fetchTodos = async () => {
-  const token = localStorage.getItem("access_token");
-
-  const response = await fetch(`${baseURL}/todos`, {
-    credentials: "include",
-  });
-  if (!response.ok) {
-    throw new Error("할일 불러오기 중 오류 발생");
+  try {
+    const response = await fetch(`${baseURL}/todos`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("할일 불러오기 중 오류 발생");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetchTodos:", error);
+    throw error;
   }
-  return response.json();
 };
 
 // 할일 추가하기

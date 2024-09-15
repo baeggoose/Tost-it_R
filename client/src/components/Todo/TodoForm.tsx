@@ -57,7 +57,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onAddTodo }) => {
   }, []);
 
   return (
-    <section className=" flex-col text-lx">
+    <section className="flex-col text-lx">
       <form
         className="flex items-center justify-center"
         onSubmit={handleSubmit}

@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // warn_red: "#FF2E29",
         main_skyblue: "#BDE3FF",
         main_bg_cloud: "#F5FBFF",
         point_blue: "#80CAFF",
