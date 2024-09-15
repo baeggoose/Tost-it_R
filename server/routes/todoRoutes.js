@@ -7,6 +7,7 @@ module.exports = (todoController) => {
   router.put("/edit/:id", todoController.updateTodo);
   router.put("/toggle/:id", todoController.toggleTodoComplete);
   router.delete("/delete/:id", todoController.deleteTodo);
+  router.delete("/deleteCompleted", todoController.deleteCompletedTodo);
 
   return router;
 };

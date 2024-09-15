@@ -47,6 +47,13 @@ class TodoModel {
     const result = await this.collection.deleteOne({ _id: new ObjectId(id) });
     return result.deletedCount > 0;
   }
-}
 
+  async deleteCompletedTodos(userId) {
+    const result = await this.collection.deleteMany({
+      userId,
+      completed: true,
+    });
+    return result.deletedCount;
+  }
+}
 module.exports = TodoModel;

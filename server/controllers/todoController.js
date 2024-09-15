@@ -72,6 +72,21 @@ class TodoController {
       res.status(500).send("할일 삭제 중 서버 오류 발생");
     }
   };
+
+  deleteCompletedTodo = async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const result = await this.todoModel.deleteCompletedTodos(userId);
+      res
+        .status(200)
+        .json({
+          message: "할일들이 성공적으로 삭제되었습니다.",
+          count: result,
+        });
+    } catch (error) {
+      res.status(500).json({ error: "할일들 삭제 중 서버 오류 발생" });
+    }
+  };
 }
 
 module.exports = TodoController;

@@ -68,6 +68,7 @@ export const toggleTodoComplete = async (id: string, completed: boolean) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ completed }),
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -88,4 +89,19 @@ export const deleteTodo = async (id: string) => {
   if (!response.ok) {
     throw new Error("할일 삭제 중 오류 발생");
   }
+};
+
+// 완료된 할일 한꺼번에 삭제
+export const deleteCompletedTodos = async () => {
+  const response = await fetch(`${baseURL}/todos/deleteCompleted`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("완료된 할일 삭제 중 오류 발생");
+  }
+
+  return response.json();
 };

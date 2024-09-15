@@ -3,9 +3,9 @@ import {
   faCheck,
   faEllipsis,
   faPenToSquare,
-  faTrashCan,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface TodoItemProps {

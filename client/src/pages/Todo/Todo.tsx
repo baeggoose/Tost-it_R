@@ -8,6 +8,7 @@ import {
   editTodo,
   deleteTodo,
   toggleTodoComplete,
+  deleteCompletedTodos,
 } from "../../API/todoAPI";
 import { logoutUser } from "../../API/authAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +16,7 @@ import {
   faHouse,
   faRightFromBracket,
   faChevronDown,
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface TodoItem {
@@ -108,6 +110,16 @@ const Todo: React.FC = () => {
     }
   };
 
+  const handleDeleteCompletedTodos = async () => {
+    try {
+      const result = await deleteCompletedTodos();
+      setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
+      console.log(`${result.count} completed todos deleted`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="bg-main_skyblue flex flex-col justify-center items-center h-screen">
@@ -118,6 +130,13 @@ const Todo: React.FC = () => {
             style={{ color: "#50b4fc" }}
             size="xl"
             onClick={handleRefresh}
+          />
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            className="cursor-pointer mr-3"
+            style={{ color: "#50b4fc" }}
+            size="xl"
+            onClick={() => handleDeleteCompletedTodos()}
           />
           <FontAwesomeIcon
             icon={faRightFromBracket}
