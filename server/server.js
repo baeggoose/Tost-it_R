@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
-    origin: "https://baeggoose.shop",
+    origin: "http://localhost:9000",
     credentials: true,
   })
 );
@@ -34,7 +34,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000, // 1시간
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
+      // secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",
     },
@@ -46,7 +47,7 @@ app.use(passport.session());
 
 MongoClient.connect(url)
   .then((client) => {
-    console.log("DB연결성공");
+    // console.log("DB연결성공");
     db = client.db("Tost-it");
 
     configurePassport(passport, db);
@@ -59,8 +60,22 @@ MongoClient.connect(url)
     const todoModel = new TodoModel(db);
     const todoController = new TodoController(todoModel);
 
-    app.use("/todos", todoRoutes(todoController));
-    app.use("/auth", authRoutes);
+    const authMiddleware = (req, res, next) => {
+      if (req.isAuthenticated()) {
+        return next();
+      }
+      res.status(401).json({ message: "인증되지 않은 사용자입니다." });
+    };
+
+    app.use("/api/todos", authMiddleware, todoRoutes(todoController));
+    app.use("/api/auth", authRoutes);
+
+    app.get("/todos", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+    });
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+    });
 
     const port = process.env.PORT || 8080;
     app.listen(port, () => {

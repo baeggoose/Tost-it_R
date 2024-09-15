@@ -34,7 +34,7 @@ exports.logoutUser = (req, res) => {
         secure: false,
         httpOnly: true,
         sameSite: "lax",
-        domain: "localhost",
+        // domain: "localhost",
       });
       res.status(200).json({ message: "로그아웃 성공" });
     });
