@@ -28,7 +28,22 @@ interface TodoItem {
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [currentTime, setCurrentTime] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const formattedTime = now.toLocaleString("ko-KR", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      setCurrentTime(formattedTime);
+    };
+    updateTime();
+  }, []);
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -147,13 +162,12 @@ const Todo: React.FC = () => {
           />
         </aside>
         <section className="bg-main_bg_cloud max-w-7xl w-98 rounded-xl h-600 relative">
-          <div className="sticky top-0 rounded-t-xl bg-main_bg_cloud ">
-            <h1 className="font-mono pl-10 pt-9 text-3xl font-semibold">
+          <div className="font-mono sticky pl-10 top-0 rounded-t-xl bg-main_bg_cloud ">
+            <h1 className="pt-9 text-3xl font-semibold">
               Today
+              <span className="pl-3 text-base font-normal">{currentTime}</span>
             </h1>
-            <p className="font-mono  pl-10 pt-3 text-sm">
-              What are you working on today?
-            </p>
+            <p className="py-2 text-sm">What are you working on today?</p>
           </div>
           <TodoList
             todos={todos}
