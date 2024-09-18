@@ -17,7 +17,9 @@ import {
   faRightFromBracket,
   faChevronDown,
   faTrashCan,
+  faCloud,
 } from "@fortawesome/free-solid-svg-icons";
+import WeatherModal from "../../components/WeatherModal";
 
 interface TodoItem {
   _id: string;
@@ -29,6 +31,7 @@ interface TodoItem {
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
   const [currentTime, setCurrentTime] = useState<string>("");
+  const [isWeatherModalOpen, setIsWeatherModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +59,7 @@ const Todo: React.FC = () => {
       }
     };
     loadTodos();
-  }, []);
+  }, [navigate]);
 
   const handleAddTodo = async (todoText: string, selectedCategory: string) => {
     try {
@@ -116,22 +119,26 @@ const Todo: React.FC = () => {
     location.reload();
   };
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      navigate("/");
-    } catch (error) {
-      console.error("로그아웃 중 오류 발생:", error);
-    }
+  const toggleWeatherModal = () => {
+    setIsWeatherModalOpen(!isWeatherModalOpen);
   };
 
   const handleDeleteCompletedTodos = async () => {
     try {
       const result = await deleteCompletedTodos();
       setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
-      console.log(`${result.count} completed todos deleted`);
+      console.log(`완료된 ${result.count}개의 할 일들 삭제 완료`);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate("/");
+    } catch (error) {
+      console.error("로그아웃 중 오류 발생:", error);
     }
   };
 
@@ -166,6 +173,13 @@ const Todo: React.FC = () => {
             <h1 className="pt-9 text-3xl font-semibold">
               Today
               <span className="pl-3 text-base font-normal">{currentTime}</span>
+              <FontAwesomeIcon
+                icon={faCloud}
+                className="pl-2 cursor-pointer mr-3"
+                style={{ color: "#50b4fc" }}
+                size="xs"
+                onClick={toggleWeatherModal}
+              />
             </h1>
             <p className="py-2 text-sm">What are you working on today?</p>
           </div>
@@ -187,6 +201,12 @@ const Todo: React.FC = () => {
           )}
         </section>
         <TodoForm onAddTodo={handleAddTodo} />
+        {isWeatherModalOpen && (
+          <WeatherModal
+            isOpen={isWeatherModalOpen}
+            onClose={() => setIsWeatherModalOpen(false)}
+          />
+        )}
       </div>
     </>
   );
