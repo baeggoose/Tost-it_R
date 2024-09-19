@@ -1,7 +1,15 @@
-// const webpack = require("webpack");
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const dotenv = require("dotenv");
+
+const env = dotenv.config().parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   mode: "production",
@@ -47,11 +55,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
-    // new webpack.DefinePlugin({
-    //   "process.env.REACT_APP_API_URL": JSON.stringify(
-    //     process.env.REACT_APP_API_URL
-    //   ),
-    // }),
+    new webpack.DefinePlugin(envKeys),
   ],
   devServer: {
     static: path.join(__dirname, "dist"),
