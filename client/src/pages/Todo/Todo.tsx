@@ -19,7 +19,7 @@ import {
   faTrashCan,
   faCloud,
 } from "@fortawesome/free-solid-svg-icons";
-import WeatherModal from "../../components/WeatherModal";
+import WeatherModal from "../../components/Weather/WeatherModal";
 
 interface TodoItem {
   _id: string;
