@@ -27,11 +27,15 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({
         icon={faThermometerHalf}
         value={`${weatherData.temperature}°C`}
       />
-      <WeatherItem icon={faTint} value={`${weatherData.humidity}%`} />
-      <WeatherItem icon={faWind} value={`${weatherData.windSpeed}m/s`} />
-      {weatherData.rainfall > 0 && (
-        <WeatherItem icon={faTint} value={`${weatherData.rainfall} mm`} />
-      )}
+      <WeatherItem
+        icon={faTint}
+        value={
+          weatherData.rainfall > 0
+            ? `${weatherData.humidity} % ${weatherData.rainfall} mm`
+            : `${weatherData.humidity} %`
+        }
+      />
+      <WeatherItem icon={faWind} value={`${weatherData.windSpeed} m/s`} />
     </div>
   );
 };
@@ -40,7 +44,7 @@ const WeatherItem: React.FC<{ icon: any; value: string }> = ({
   icon,
   value,
 }) => (
-  <div className="flex-grow basis-0 bg-blue-100 p-3 rounded-lg">
+  <div className="flex items-center justify-center flex-grow basis-0 bg-blue-100 p-3 rounded-lg">
     <FontAwesomeIcon icon={icon} className="mr-2 text-blue-500" />
     <span className="font-bold">{value}</span>
   </div>
