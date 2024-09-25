@@ -27,7 +27,7 @@ export const fetchWeatherData = async (nx: number, ny: number) => {
     }
 
     const text = await response.text();
-    console.log("API Response:", text);
+    // console.log("API Response:", text);
 
     let data;
     try {

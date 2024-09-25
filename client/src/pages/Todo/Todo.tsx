@@ -18,8 +18,10 @@ import {
   faChevronDown,
   faTrashCan,
   faCloud,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import WeatherModal from "../../components/Weather/WeatherModal";
+import PomodoroTimer from "../../components/Pomodoro/PomodoroTimer";
 
 interface TodoItem {
   _id: string;
@@ -32,6 +34,7 @@ const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isWeatherModalOpen, setIsWeatherModalOpen] = useState(false);
+  const [isPomodoroOpen, setIsPomodoroOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -119,8 +122,8 @@ const Todo: React.FC = () => {
     location.reload();
   };
 
-  const toggleWeatherModal = () => {
-    setIsWeatherModalOpen(!isWeatherModalOpen);
+  const togglePomodoro = () => {
+    setIsPomodoroOpen(!isPomodoroOpen);
   };
 
   const handleDeleteCompletedTodos = async () => {
@@ -142,6 +145,10 @@ const Todo: React.FC = () => {
     }
   };
 
+  const toggleWeatherModal = () => {
+    setIsWeatherModalOpen(!isWeatherModalOpen);
+  };
+
   return (
     <>
       <div className="bg-main_skyblue flex flex-col justify-center items-center h-screen">
@@ -152,6 +159,13 @@ const Todo: React.FC = () => {
             style={{ color: "#50b4fc" }}
             size="xl"
             onClick={handleRefresh}
+          />
+          <FontAwesomeIcon
+            icon={faClock}
+            className="cursor-pointer mr-3"
+            style={{ color: "#50b4fc" }}
+            size="xl"
+            onClick={togglePomodoro}
           />
           <FontAwesomeIcon
             icon={faTrashCan}
@@ -206,6 +220,9 @@ const Todo: React.FC = () => {
             isOpen={isWeatherModalOpen}
             onClose={() => setIsWeatherModalOpen(false)}
           />
+        )}
+        {isPomodoroOpen && (
+          <PomodoroTimer onClose={() => setIsPomodoroOpen(false)} />
         )}
       </div>
     </>
