@@ -31,7 +31,8 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({
         icon={faTint}
         value={
           weatherData.rainfall > 0
-            ? `${weatherData.humidity} % ${weatherData.rainfall} mm`
+            ? `${weatherData.humidity} %
+            ${weatherData.rainfall} mm`
             : `${weatherData.humidity} %`
         }
       />

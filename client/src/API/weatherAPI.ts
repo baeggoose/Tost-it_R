@@ -40,9 +40,10 @@ export const fetchWeatherData = async (nx: number, ny: number) => {
     if (data.response && data.response.body && data.response.body.items) {
       const items = data.response.body.items.item;
       return processWeatherData(items);
+    } else if (data.response.header.resultCode === "03") {
+      throw new Error("날씨 데이터가 없습니다. 잠시 후 다시 시도해 주세요.");
     } else {
-      console.error("예상치 못한 API 응답 구조:", data);
-      throw new Error("예상치 못한 API 응답 구조");
+      throw new Error(`API 오류: ${data.response.header.resultMsg}`);
     }
   } catch (error) {
     console.error("날씨 데이터를 가져오는 중 오류 발생:", error);
