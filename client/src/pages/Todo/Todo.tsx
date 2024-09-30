@@ -151,8 +151,8 @@ const Todo: React.FC = () => {
 
   return (
     <>
-      <div className="bg-main_skyblue flex flex-col justify-center items-center h-screen">
-        <aside className="w-98 text-right mr-5 mb-5">
+      <div className="bg-main_skyblue flex flex-col justify-center items-center xs:w-full h-screen">
+        <aside className="xs:w-80 sm:w-98 text-right mr-5 my-4">
           <FontAwesomeIcon
             icon={faHouse}
             className="cursor-pointer mr-3"
@@ -182,20 +182,23 @@ const Todo: React.FC = () => {
             onClick={handleLogout}
           />
         </aside>
-        <section className="bg-main_bg_cloud max-w-7xl w-98 rounded-xl h-600 relative">
-          <div className="font-mono sticky pl-10 top-0 rounded-t-xl bg-main_bg_cloud ">
-            <h1 className="pt-9 text-3xl font-semibold">
+        <section className="bg-main_bg_cloud xs:w-80 w-98 rounded-xl xs:h-[520px] sm:h-600 relative">
+          <div className="font-mono sticky xs:pl-5 pl-10 rounded-t-xl bg-main_bg_cloud ">
+            <h1 className="xs:pt-2 pt-9 xs:text-xl text-3xl font-semibold">
               Today
-              <span className="pl-3 text-base font-normal">{currentTime}</span>
+              <span className="xs:pl-1.5 pl-3 text-base font-normal">
+                {currentTime}
+              </span>
               <FontAwesomeIcon
                 icon={faCloud}
-                className="pl-2 cursor-pointer mr-3"
+                className="pl-2 cursor-pointer xs:mr-0 mr-3"
                 style={{ color: "#50b4fc" }}
-                size="xs"
                 onClick={toggleWeatherModal}
               />
             </h1>
-            <p className="py-2 text-sm">What are you working on today?</p>
+            <p className="xs:py-0 py-2 text-sm">
+              What are you working on today?
+            </p>
           </div>
           <TodoList
             todos={todos}

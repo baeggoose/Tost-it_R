@@ -54,7 +54,7 @@ function Register() {
           이메일
         </label>
         <input
-          className="w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
+          className="xs:w-72 w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
           placeholder="todo@list.com"
           name="username"
           type="email"
@@ -68,7 +68,7 @@ function Register() {
           비밀번호
         </label>
         <input
-          className="w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
+          className="xs:w-72 w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
           placeholder="영문자 또는 숫자 또는 특수문자 조합 4글자 이상"
           name="password"
           type="password"
@@ -82,7 +82,7 @@ function Register() {
           비밀번호 확인.
         </label>
         <input
-          className="w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
+          className="xs:w-72 w-80 text-sm px-2 py-2 border-b block outline-0 focus:border-sky-500"
           placeholder="비밀번호 재입력"
           name="password"
           type="password"
@@ -94,7 +94,7 @@ function Register() {
       {passwordError && <p className="text-red-500 text-xs">{passwordError}</p>}
       <button
         type="submit"
-        className={`text-white font-bold w-80 py-2 h-11 mt-8 mb-5 rounded-full text-sm ${
+        className={`text-white font-bold xs:w-72 w-80 py-2 h-11 mt-8 mb-5 rounded-full text-sm ${
           isValid ? "bg-sky-500" : "bg-sky-200"
         } `}
       >

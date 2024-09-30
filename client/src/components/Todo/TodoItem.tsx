@@ -102,7 +102,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   return (
     <li
-      className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black break-all z-10 ${getCategoryColor(
+      className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black break-all z-1 ${getCategoryColor(
         selectedCategory
       )}`}
     >

@@ -29,7 +29,8 @@ const TodoList: React.FC<TodoListProps> = ({
 
   return (
     <ul
-      className="h-fit max-h-450 py-2 px-6 grid grid-cols-2 gap-5 overflow-y-scroll"
+      // h-fit
+      className="xs:max-h-[425px] max-h-450 py-2 xs:px-4 px-6 grid grid-cols-2 xs:gap-3 gap-5 overflow-y-scroll"
       style={{
         scrollbarWidth: "none" /* Firefox */,
         msOverflowStyle: "none" /* IE and Edge */,

@@ -57,55 +57,53 @@ const TodoForm: React.FC<TodoFormProps> = ({ onAddTodo }) => {
   }, []);
 
   return (
-    <section className="flex-col text-lx">
-      <form
-        className="flex items-center justify-center"
-        onSubmit={handleSubmit}
-      >
-        <div className="relative" ref={dropdownRef}>
-          <button
-            type="button"
-            onClick={toggleDropdown}
-            className={`text-white bg-point_blue font-medium p-2 ${
-              isOpen ? "rounded-t-lg " : "rounded-lg shadow"
-            }`}
-          >
-            {selectedCategory.label}
-          </button>
+    <section className="flex items-center text-lx">
+      <div className="relative" ref={dropdownRef}>
+        <button
+          type="button"
+          onClick={toggleDropdown}
+          className={`text-white bg-point_blue font-medium p-2 ${
+            isOpen ? "xs:rounded-b-lg sm:rounded-t-lg" : "rounded-lg shadow"
+          }`}
+        >
+          {selectedCategory.label}
+        </button>
 
-          {isOpen && (
-            <div className="absolute bg-point_blue rounded-b-lg text-white text-center w-full border-t border-white">
-              {categories.map((category, index) => (
-                <button
-                  key={category.value}
-                  className={`block w-full py-2 ${
-                    index > 0 ? "border-t border-white" : ""
-                  }`}
-                  onClick={() => {
-                    setSelectedCategory(category);
-                    setIsOpen(false);
-                  }}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          )}
+        <div
+          className={`absolute xs:bottom-full xs:transform xs:translate-y-1 bg-point_blue xs:rounded-t-lg sm:rounded-b-lg text-white text-center w-full xs:border-b sm:border-t border-white overflow-hidden transition-all ease-in-out duration-300 ${
+            isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          {categories.map((category, index) => (
+            <button
+              key={category.value}
+              className={`block w-full py-2 ${
+                index > 0 ? "border-t border-white" : ""
+              } transition-opacity duration-300 ${
+                isOpen ? "opacity-100" : "opacity-0"
+              }`}
+              onClick={() => {
+                setSelectedCategory(category);
+                setIsOpen(false);
+              }}
+            >
+              {category.label}
+            </button>
+          ))}
         </div>
+      </div>
 
+      <form className="flex justify-center" onSubmit={handleSubmit}>
         <input
           type="text"
-          className="m-4 w-64 rounded-md shadow bg-point_blue font-normal p-2 pr-10 placeholder-white"
+          className="xs:m-3 m-4 xs:w-56 w-64 rounded-md shadow bg-point_blue font-normal p-2 placeholder-white"
           placeholder="할 일을 입력해주세요"
           maxLength={32}
           value={todoText}
           onChange={handleTodo}
         />
 
-        <button
-          type="submit"
-          className="cursor-pointer flex items-center justify-center"
-        >
+        <button type="submit" className="cursor-pointer">
           <FontAwesomeIcon
             icon={plus}
             size="2xl"

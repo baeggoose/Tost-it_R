@@ -22,6 +22,10 @@ module.exports = {
         450: "448px",
         600: "600px",
       },
+      screens: {
+        // mobile min : Galaxy S9+
+        xs: { min: "320px", max: "639px" },
+      },
     },
   },
   plugins: [],
