@@ -1,4 +1,6 @@
-import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpDown } from "@fortawesome/free-solid-svg-icons";
+import React, { useRef, useState } from "react";
 import TodoItem from "./TodoItem";
 
 interface TodoListProps {
@@ -19,6 +21,7 @@ const TodoList: React.FC<TodoListProps> = ({
     lunch: 2,
     dinner: 3,
   };
+  const [isScroll, setIsScroll] = useState(false);
 
   const sortedTodos = [...todos].sort((a, b) => {
     return (
@@ -27,14 +30,47 @@ const TodoList: React.FC<TodoListProps> = ({
     );
   });
 
+  const todoListRef = useRef<HTMLUListElement>(null);
+
+  const toggleToUPDown = () => {
+    isScroll ? scrollToTop() : scrollToBottom();
+    setIsScroll(!isScroll);
+  };
+
+  const scrollToTop = () => {
+    if (todoListRef.current) {
+      todoListRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+  const scrollToBottom = () => {
+    if (todoListRef.current) {
+      todoListRef.current.scrollTo({
+        top: todoListRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <ul
+      ref={todoListRef}
       className="xs:max-h-[424px] mb:max-h-[424px] sm:max-h-450 py-2 xs:px-4 mb:px-5 px-6 grid grid-cols-2 xs:gap-3 mb:gap-3 gap-5 overflow-y-scroll"
       style={{
         scrollbarWidth: "none" /* Firefox */,
         msOverflowStyle: "none" /* IE and Edge */,
       }}
     >
+      {todos.length > 6 && (
+        <FontAwesomeIcon
+          icon={faUpDown}
+          size="xl"
+          className="text-point_blue cursor-pointer absolute flex justify-center hover:fade xs:bottom-2 bottom-4 xs:right-4 right-6 "
+          onClick={toggleToUPDown}
+        />
+      )}
       {sortedTodos.map((todo) => (
         <TodoItem
           key={todo._id}

@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
   faRightFromBracket,
-  faChevronDown,
   faTrashCan,
   faCloud,
   faClock,
@@ -35,7 +34,9 @@ const Todo: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isWeatherModalOpen, setIsWeatherModalOpen] = useState(false);
   const [isPomodoroOpen, setIsPomodoroOpen] = useState(false);
+  // const [isScroll, setIsScroll] = useState(false);
   const navigate = useNavigate();
+  // const todoListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -206,16 +207,6 @@ const Todo: React.FC = () => {
             onDeleteTodo={handleDeleteTodo}
             onToggleComplete={handleToggleComplete}
           />
-          {/* 할일이 6개 이상일 때 아래로 향하는 아이콘 표시 */}
-          {todos.length > 6 && (
-            <div className="absolute bottom-2 left-0 right-0 flex justify-center">
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                size="xl"
-                className="text-point_blue"
-              />
-            </div>
-          )}
         </section>
         <TodoForm onAddTodo={handleAddTodo} />
         {isWeatherModalOpen && (
