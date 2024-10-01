@@ -102,7 +102,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   return (
     <li
-      className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black break-all z-1 ${getCategoryColor(
+      className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black whitespace-pre-wrap break-all z-1 ${getCategoryColor(
         selectedCategory
       )}`}
     >
@@ -113,7 +113,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             maxLength={32}
             onChange={(e) => setEditingText(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full h-24 bg-transparent tracking-widest resize-none"
+            className="w-full h-24 bg-transparent tracking-widest resize-none whitespace-pre-wrap"
           />
           <button onClick={handleSaveClick}>
             <FontAwesomeIcon
@@ -152,7 +152,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
         </>
       ) : (
         <>
-          <p className={isDone ? "line-through" : ""}>{todo.title}</p>
+          <p
+            className={`h-24 overflow-y-scroll ${isDone ? "line-through" : ""}`}
+          >
+            {todo.title}
+          </p>
           {isDone ? (
             <button onClick={() => onDeleteTodo(todo._id)}>
               <FontAwesomeIcon
