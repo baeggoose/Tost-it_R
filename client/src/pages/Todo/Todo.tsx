@@ -129,9 +129,16 @@ const Todo: React.FC = () => {
 
   const handleDeleteCompletedTodos = async () => {
     try {
+      const completedTodos = todos.filter((todo) => todo.completed);
+
+      if (completedTodos.length === 0) {
+        alert("삭제할 완료된 일이 0개입니다.");
+        return;
+      }
+
       const result = await deleteCompletedTodos();
       setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
-      console.log(`완료된 ${result.count}개의 할 일들 삭제 완료`);
+      // console.log(`완료된 ${result.count}개의 할 일들 삭제 완료`);
     } catch (error) {
       console.error(error);
     }
