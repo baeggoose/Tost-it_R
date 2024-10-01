@@ -22,7 +22,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({
   if (!weatherData) return <p>날씨 데이터가 없습니다.</p>;
 
   return (
-    <div className="flex justify-between gap-2 mt-2">
+    <div className="flex justify-between xs:gap-1.5 mb:gap-2 sm:gap-2 mt-2">
       <WeatherItem
         icon={faThermometerHalf}
         value={`${weatherData.temperature}°C`}
@@ -31,12 +31,12 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({
         icon={faTint}
         value={
           weatherData.rainfall > 0
-            ? `${weatherData.humidity} %
-            ${weatherData.rainfall} mm`
-            : `${weatherData.humidity} %`
+            ? `${weatherData.humidity}%
+            ${weatherData.rainfall}mm`
+            : `${weatherData.humidity}%`
         }
       />
-      <WeatherItem icon={faWind} value={`${weatherData.windSpeed} m/s`} />
+      <WeatherItem icon={faWind} value={`${weatherData.windSpeed}m/s`} />
     </div>
   );
 };

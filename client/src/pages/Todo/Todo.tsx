@@ -151,8 +151,8 @@ const Todo: React.FC = () => {
 
   return (
     <>
-      <div className="bg-main_skyblue flex flex-col justify-center items-center xs:w-full h-screen">
-        <aside className="xs:w-80 sm:w-98 text-right mr-5 my-4">
+      <div className="bg-main_skyblue flex flex-col justify-center items-center min-w-[360px] min-h-[640px] h-screen">
+        <aside className="xs:w-80 mb:w-96 sm:w-98 text-right mr-5 my-3">
           <FontAwesomeIcon
             icon={faHouse}
             className="cursor-pointer mr-3"
@@ -182,21 +182,21 @@ const Todo: React.FC = () => {
             onClick={handleLogout}
           />
         </aside>
-        <section className="bg-main_bg_cloud xs:w-80 w-98 rounded-xl xs:h-[520px] sm:h-600 relative">
-          <div className="font-mono sticky xs:pl-5 pl-10 rounded-t-xl bg-main_bg_cloud ">
-            <h1 className="xs:pt-2 pt-9 xs:text-xl text-3xl font-semibold">
+        <section className="bg-main_bg_cloud rounded-xl relative xs:w-80 mb:w-96 sm:w-98 xs:h-[520px] mb:h-[520px] sm:h-600">
+          <div className="font-mono sticky xs:pl-5 mb:pl-5 pl-10 rounded-t-xl bg-main_bg_cloud ">
+            <h1 className="xs:pt-2 mb:pt-2 pt-9 xs:text-xl mb:text-xl text-3xl font-semibold">
               Today
               <span className="xs:pl-1.5 pl-3 text-base font-normal">
                 {currentTime}
               </span>
               <FontAwesomeIcon
                 icon={faCloud}
-                className="pl-2 cursor-pointer xs:mr-0 mr-3"
+                className="pl-2 cursor-pointer text-2xl xs:text-xl"
                 style={{ color: "#50b4fc" }}
                 onClick={toggleWeatherModal}
               />
             </h1>
-            <p className="xs:py-0 py-2 text-sm">
+            <p className="xs:py-0 mb:py-0 py-2 text-sm">
               What are you working on today?
             </p>
           </div>

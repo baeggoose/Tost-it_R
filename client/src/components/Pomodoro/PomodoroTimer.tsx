@@ -86,7 +86,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg max-w-sm w-full">
+      <div className="bg-white rounded-lg w-full xs:p-4 mb:p-5 sm:p-6 xs:max-w-xs mb:max-w-sm sm:max-w-sm">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Pomodoro Timer</h2>
           <button
@@ -96,7 +96,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ onClose }) => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
-        <div className="relative w-40 h-40 mx-auto">
+        <div className="relative w-40 h-40 mx-auto m-1">
           <svg className="w-full h-full transform -rotate-90">
             <circle
               cx="80"
@@ -131,37 +131,35 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ onClose }) => {
           </div>
         )}
 
-        <div className="mt-6 space-y-2">
-          <label htmlFor="timeSelect" className="block text-sm font-medium">
-            시간 설정:
-          </label>
-          <div className="flex space-x-2">
-            <select
-              id="hourSelect"
-              onChange={(e) => handleTimeChange(e, "hour")}
-              className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md"
-            >
-              {[...Array(24)].map((_, hour) => (
-                <option key={hour} value={hour}>
-                  {hour}시간
-                </option>
-              ))}
-            </select>
-            <select
-              id="minuteSelect"
-              onChange={(e) => handleTimeChange(e, "minute")}
-              className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md"
-            >
-              {[...Array(60)].map((_, min) => (
-                <option key={min} value={min}>
-                  {min}분
-                </option>
-              ))}
-            </select>
-          </div>
+        <label htmlFor="timeSelect" className="block text-sm font-medium">
+          시간 설정:
+        </label>
+        <div className="flex space-x-2 my-2">
+          <select
+            id="hourSelect"
+            onChange={(e) => handleTimeChange(e, "hour")}
+            className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md"
+          >
+            {[...Array(24)].map((_, hour) => (
+              <option key={hour} value={hour}>
+                {hour}시간
+              </option>
+            ))}
+          </select>
+          <select
+            id="minuteSelect"
+            onChange={(e) => handleTimeChange(e, "minute")}
+            className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md"
+          >
+            {[...Array(60)].map((_, min) => (
+              <option key={min} value={min}>
+                {min}분
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div className="mt-6 flex justify-center space-x-2">
+        <div className="flex justify-center space-x-2">
           <button
             onClick={handleStart}
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition"

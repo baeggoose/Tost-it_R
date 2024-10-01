@@ -1,5 +1,9 @@
 # Tost-it_R
 
+### 반응형
+
+- xs: width-360px
+
 ## Commit convention
 
 ### "태그: 제목"의 형태이며, : 뒤에만 space가 있음에 유의합니다

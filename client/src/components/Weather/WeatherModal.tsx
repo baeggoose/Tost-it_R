@@ -37,7 +37,7 @@ const WeatherModal: React.FC<WeatherModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg max-w-sm w-full">
+      <div className="bg-white rounded-lg w-full xs:p-4 mb:p-5 sm:p-6 xs:max-w-xs mb:max-w-sm sm:max-w-sm">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">현재 날씨</h2>
           <button
@@ -47,18 +47,16 @@ const WeatherModal: React.FC<WeatherModalProps> = ({ isOpen, onClose }) => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
-        <div className="mt-2">
-          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
-          <span>
-            {isLocationLoading || !location
-              ? "위치 불러오는 중..."
-              : locationError
-              ? locationError
-              : address
-              ? address
-              : "주소를 가져올 수 없습니다"}
-          </span>
-        </div>
+        <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+        <span>
+          {isLocationLoading || !location
+            ? "위치 불러오는 중..."
+            : locationError
+            ? locationError
+            : address
+            ? address
+            : "주소를 가져올 수 없습니다"}
+        </span>
         <WeatherDisplay
           weatherData={weatherData}
           isLoading={isWeatherLoading}
