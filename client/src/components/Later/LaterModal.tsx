@@ -84,7 +84,7 @@ const LaterModal: React.FC<LaterModalProps> = ({ onClose, fetchLaters }) => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
-        <ul className="grid grid-cols-2 p-1 my-2 xs:gap-3 mb:gap-3 gap-4 overflow-y-scroll">
+        <ul className="grid grid-cols-2 p-1 my-2 xs:gap-3 mb:gap-3 gap-4 overflow-y-auto no-scrollbar">
           {laters.map((later) => (
             <LaterItem
               key={later._id}

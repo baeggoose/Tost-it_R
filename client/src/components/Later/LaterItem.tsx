@@ -68,7 +68,7 @@ const LaterItem: React.FC<LaterItemProps> = ({ later, onEdit, onDelete }) => {
         </>
       ) : (
         <>
-          <p className={`h-24 overflow-y-scroll`}>{later.title}</p>
+          <p className={`h-24 overflow-y-auto`}>{later.title}</p>
 
           <button onClick={handleEditClick}>
             <FontAwesomeIcon

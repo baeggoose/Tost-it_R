@@ -152,9 +152,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         </>
       ) : (
         <>
-          <p
-            className={`h-24 overflow-y-scroll ${isDone ? "line-through" : ""}`}
-          >
+          <p className={`h-24 overflow-y-auto ${isDone ? "line-through" : ""}`}>
             {todo.title}
           </p>
           {isDone ? (
