@@ -18,9 +18,12 @@ import {
   faTrashCan,
   faCloud,
   faClock,
+  faWorm,
 } from "@fortawesome/free-solid-svg-icons";
 import WeatherModal from "../../components/Weather/WeatherModal";
 import PomodoroTimer from "../../components/Pomodoro/PomodoroTimer";
+import LaterModal from "../../components/Later/LaterModal";
+import { fetchLaters } from "../../API/laterAPI";
 
 interface TodoItem {
   _id: string;
@@ -34,9 +37,8 @@ const Todo: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isWeatherModalOpen, setIsWeatherModalOpen] = useState(false);
   const [isPomodoroOpen, setIsPomodoroOpen] = useState(false);
-  // const [isScroll, setIsScroll] = useState(false);
+  const [isLaterModalOpen, setIsLaterModalOpen] = useState(false);
   const navigate = useNavigate();
-  // const todoListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -68,7 +70,7 @@ const Todo: React.FC = () => {
   const handleAddTodo = async (todoText: string, selectedCategory: string) => {
     try {
       const newTodo = await addTodo(todoText, selectedCategory);
-      setTodos([...todos, newTodo]);
+      setTodos((prevTodos) => [...prevTodos, newTodo]);
     } catch (error) {
       console.error(error);
     }
@@ -157,6 +159,10 @@ const Todo: React.FC = () => {
     setIsWeatherModalOpen(!isWeatherModalOpen);
   };
 
+  const toggleLaterModal = () => {
+    setIsLaterModalOpen(!isLaterModalOpen);
+  };
+
   return (
     <>
       <div className="bg-main_skyblue flex flex-col justify-center items-center min-w-[360px] min-h-[640px] h-screen">
@@ -174,6 +180,13 @@ const Todo: React.FC = () => {
             style={{ color: "#50b4fc" }}
             size="xl"
             onClick={togglePomodoro}
+          />
+          <FontAwesomeIcon
+            icon={faWorm}
+            className="cursor-pointer mr-3"
+            style={{ color: "#50b4fc" }}
+            size="xl"
+            onClick={() => toggleLaterModal()}
           />
           <FontAwesomeIcon
             icon={faTrashCan}
@@ -216,16 +229,19 @@ const Todo: React.FC = () => {
           />
         </section>
         <TodoForm onAddTodo={handleAddTodo} />
-        {isWeatherModalOpen && (
-          <WeatherModal
-            isOpen={isWeatherModalOpen}
-            onClose={() => setIsWeatherModalOpen(false)}
-          />
-        )}
-        {isPomodoroOpen && (
-          <PomodoroTimer onClose={() => setIsPomodoroOpen(false)} />
-        )}
       </div>
+      {isWeatherModalOpen && (
+        <WeatherModal
+          isOpen={isWeatherModalOpen}
+          onClose={() => setIsWeatherModalOpen(false)}
+        />
+      )}
+      {isPomodoroOpen && (
+        <PomodoroTimer onClose={() => setIsPomodoroOpen(false)} />
+      )}
+      {isLaterModalOpen && (
+        <LaterModal fetchLaters={fetchLaters} onClose={toggleLaterModal} />
+      )}
     </>
   );
 };

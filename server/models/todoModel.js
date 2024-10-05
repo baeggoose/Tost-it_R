@@ -19,7 +19,7 @@ class TodoModel {
     return this.collection.find({ userId }).toArray();
   }
 
-  async updateTodo(id, title, category, userId) {
+  async updateTodo(id, title, category) {
     const updateFields = {};
     if (title) updateFields.title = title;
     if (category) updateFields.category = category;

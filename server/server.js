@@ -9,6 +9,9 @@ const authRoutes = require("./routes/authRoutes");
 const todoRoutes = require("./routes/todoRoutes");
 const TodoModel = require("./models/todoModel");
 const TodoController = require("./controllers/todoController");
+const laterRoutes = require("./routes/laterRoutes");
+const LaterModel = require("./models/laterModel");
+const LaterController = require("./controllers/laterController");
 const configurePassport = require("./config/passport");
 
 dotenv.config();
@@ -59,6 +62,8 @@ MongoClient.connect(url)
 
     const todoModel = new TodoModel(db);
     const todoController = new TodoController(todoModel);
+    const laterModel = new LaterModel(db);
+    const laterController = new LaterController(laterModel);
 
     const authMiddleware = (req, res, next) => {
       if (req.isAuthenticated()) {
@@ -67,6 +72,7 @@ MongoClient.connect(url)
       res.status(401).json({ message: "인증되지 않은 사용자입니다." });
     };
 
+    app.use("/api/laters", authMiddleware, laterRoutes(laterController));
     app.use("/api/todos", authMiddleware, todoRoutes(todoController));
     app.use("/api/auth", authRoutes);
 
