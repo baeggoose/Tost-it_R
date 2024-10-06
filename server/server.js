@@ -50,7 +50,6 @@ app.use(passport.session());
 
 MongoClient.connect(url)
   .then((client) => {
-    // console.log("DB연결성공");
     db = client.db("Tost-it");
 
     configurePassport(passport, db);
