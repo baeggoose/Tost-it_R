@@ -4,6 +4,7 @@ import { baseURL } from "../utils/apiConfig";
 export const fetchTodos = async () => {
   try {
     const response = await fetch(`${baseURL}/todos`, {
+      method: "GET",
       credentials: "include",
     });
     if (!response.ok) {

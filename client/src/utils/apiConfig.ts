@@ -1,1 +1,1 @@
-export const baseURL = `${process.env.REACT_APP_API_URL_PROD}`;
+export const baseURL = `${process.env.REACT_APP_API_URL_PROD}api`;
