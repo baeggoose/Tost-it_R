@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
-    origin: "http://localhost:9000",
+    origin: ["http://localhost:9000", "https://tost-it-r.vercel.app"],
     credentials: true,
   })
 );
@@ -57,6 +57,10 @@ MongoClient.connect(url)
     app.use((req, res, next) => {
       req.db = db;
       next();
+    });
+
+    app.get("/health", (req, res) => {
+      res.status(200).send("OK");
     });
 
     const todoModel = new TodoModel(db);

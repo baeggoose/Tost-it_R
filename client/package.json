@@ -8,7 +8,7 @@
     "start": "webpack serve --open --mode development",
     "build": "webpack --mode production"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "https://tost-it-env.eba-aibjppfc.ap-northeast-2.elasticbeanstalk.com",
   "keywords": [],
   "author": "",
   "license": "ISC",
