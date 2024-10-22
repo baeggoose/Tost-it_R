@@ -21,10 +21,15 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(
   cors({
-    origin: ["http://localhost:9000", "https://tost-it-r.vercel.app"],
+    origin: [
+      "http://localhost:9000",
+      // "https://tost-it-r.vercel.app",
+      // "https://baeggoose.shop",
+    ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 const url = process.env.DB_URL;
@@ -36,11 +41,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 60 * 60 * 1000, // 1시간
       secure: false,
-      // secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
+      httpOnly: false,
+      maxAge: 12 * 60 * 60 * 1000, // 12시간
+      // domain: ".baeggoose.shop",
     },
   })
 );
@@ -69,6 +74,12 @@ MongoClient.connect(url)
     const laterController = new LaterController(laterModel);
 
     const authMiddleware = (req, res, next) => {
+      console.log("Auth check:", {
+        isAuthenticated: req.isAuthenticated(),
+        session: req.session,
+        user: req.user,
+      });
+
       if (req.isAuthenticated()) {
         return next();
       }

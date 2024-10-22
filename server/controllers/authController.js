@@ -2,6 +2,12 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 exports.checkSession = (req, res) => {
+  console.log("Session check:", {
+    isAuthenticated: req.isAuthenticated(),
+    session: req.session,
+    user: req.user,
+  });
+
   if (req.isAuthenticated()) {
     res.json({ isAuthenticated: true, user: req.user });
   } else {
@@ -15,6 +21,9 @@ exports.loginUser = (req, res, next) => {
     if (!user) return res.status(401).json({ message: info.message });
     req.logIn(user, (err) => {
       if (err) return next(err);
+      req.session.userId = user._id;
+      console.log("Session after login:", req.session);
+      console.log("User in session:", req.user);
       return res.status(200).json({ message: "로그인 성공" });
     });
   })(req, res, next);
@@ -32,9 +41,8 @@ exports.logoutUser = (req, res) => {
       res.clearCookie("connect.sid", {
         path: "/",
         secure: false,
-        httpOnly: true,
-        sameSite: "lax",
-        // domain: "localhost",
+        sameSite: "none",
+        httpOnly: false,
       });
       res.status(200).json({ message: "로그아웃 성공" });
     });

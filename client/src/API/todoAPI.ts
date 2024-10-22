@@ -6,6 +6,9 @@ export const fetchTodos = async () => {
     const response = await fetch(`${baseURL}/todos`, {
       method: "GET",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (!response.ok) {
       throw new Error("할일 불러오기 중 오류 발생");
