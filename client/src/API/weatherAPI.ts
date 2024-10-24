@@ -1,7 +1,7 @@
 import { WeatherData } from "../types/weather";
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-const BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
+const BASE_URL = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
 
 export const fetchWeatherData = async (nx: number, ny: number) => {
   if (!API_KEY) {
