@@ -40,7 +40,7 @@ exports.logoutUser = (req, res) => {
       }
       res.clearCookie("connect.sid", {
         path: "/",
-        secure: false,
+        secure: true,
         sameSite: "none",
         httpOnly: false,
       });

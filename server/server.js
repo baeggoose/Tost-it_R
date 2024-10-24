@@ -19,6 +19,8 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "dist")));
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: [
@@ -40,10 +42,11 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
-      secure: false,
+      secure: true,
       sameSite: "none",
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 12 * 60 * 60 * 1000, // 12시간
       // domain: ".baeggoose.shop",
     },
