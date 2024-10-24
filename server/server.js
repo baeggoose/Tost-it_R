@@ -25,7 +25,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:9000",
-      // "https://tost-it-r.vercel.app",
+      "https://tost-it-r.vercel.app",
+      "https://tost-it-r-baeggooses-projects.vercel.app",
       // "https://baeggoose.shop",
     ],
     credentials: true,
