@@ -63,14 +63,14 @@ const TodoForm: React.FC<TodoFormProps> = ({ onAddTodo }) => {
           type="button"
           onClick={toggleDropdown}
           className={`text-white bg-point_blue font-medium p-2 ${
-            isOpen ? "xs:rounded-b-lg sm:rounded-t-lg" : "rounded-lg shadow"
+            isOpen ? "xs:rounded-b-lg rounded-t-lg" : "rounded-lg shadow"
           }`}
         >
           {selectedCategory.label}
         </button>
 
         <div
-          className={`absolute xs:bottom-full xs:transform xs:translate-y-1 bg-point_blue xs:rounded-t-lg sm:rounded-b-lg text-white text-center w-full xs:border-b sm:border-t border-white overflow-hidden transition-all ease-in-out duration-300 ${
+          className={`absolute xs:bottom-full xs:transform xs:translate-y-1 bg-point_blue xs:rounded-t-lg mb:rounded-b-lg sm:rounded-b-lg text-white text-center w-full xs:border-b mb:border-t sm:border-t border-white overflow-hidden transition-all ease-in-out duration-300 ${
             isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
           }`}
         >

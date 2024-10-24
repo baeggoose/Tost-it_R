@@ -67,7 +67,7 @@ const TodoList: React.FC<TodoListProps> = ({
         <FontAwesomeIcon
           icon={faUpDown}
           size="xl"
-          className="text-point_blue cursor-pointer absolute flex justify-center hover:fade xs:bottom-2 bottom-4 xs:right-4 right-6 "
+          className="text-point_blue cursor-pointer absolute flex justify-center hover:fade xs:bottom-2 mb:bottom-2 bottom-4 xs:right-4 mb:right-5 right-6 "
           onClick={toggleToUPDown}
         />
       )}
