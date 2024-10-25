@@ -204,8 +204,8 @@ const Todo: React.FC = () => {
           />
         </aside>
         <section className="bg-main_bg_cloud rounded-xl relative xs:w-80 mb:w-96 sm:w-98 xs:h-[520px] mb:h-[520px] sm:h-600">
-          <div className="font-mono sticky xs:pl-5 mb:pl-5 pl-10 rounded-t-xl bg-main_bg_cloud ">
-            <h1 className="xs:pt-2 mb:pt-2 pt-9 xs:text-xl mb:text-xl text-3xl font-semibold">
+          <div className="font-mono sticky xs:pl-4 mb:pl-5 pl-6 rounded-t-xl bg-main_bg_cloud ">
+            <h1 className="xs:pt-2 mb:pt-2 pt-6 xs:text-xl mb:text-xl text-3xl font-semibold">
               Today
               <span className="xs:pl-1.5 pl-3 text-base font-normal">
                 {currentTime}

@@ -34,11 +34,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "morning":
-        return "bg-red-300";
+        return "bg-red-200";
       case "lunch":
-        return "bg-yellow-300";
+        return "bg-yellow-100";
       case "dinner":
-        return "bg-blue-400";
+        return "bg-blue-200";
       default:
         return "bg-gray-500";
     }
@@ -102,7 +102,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   return (
     <li
-      className={`font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black whitespace-pre-wrap break-all z-1 ${getCategoryColor(
+      className={`font-semibold tracking-widest relative w-50 h-32 p-1 pl-1.5 shadow shadow-gray-400 whitespace-pre-wrap break-all z-1 ${getCategoryColor(
         selectedCategory
       )}`}
     >

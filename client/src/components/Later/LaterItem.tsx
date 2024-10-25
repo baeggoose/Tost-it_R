@@ -41,7 +41,7 @@ const LaterItem: React.FC<LaterItemProps> = ({ later, onEdit, onDelete }) => {
     }
   };
   return (
-    <li className="bg-main_skyblue font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-black whitespace-pre-wrap break-all z-1">
+    <li className="bg-main_skyblue font-semibold tracking-widest relative w-50 h-32 p-1 shadow shadow-gray-300 whitespace-pre-wrap break-all z-1">
       {isEditing ? (
         <>
           <textarea

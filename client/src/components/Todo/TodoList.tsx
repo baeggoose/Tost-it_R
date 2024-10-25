@@ -57,11 +57,7 @@ const TodoList: React.FC<TodoListProps> = ({
   return (
     <ul
       ref={todoListRef}
-      className="xs:max-h-[424px] mb:max-h-[424px] sm:max-h-450 py-2 xs:px-4 mb:px-5 px-6 grid grid-cols-2 xs:gap-3 mb:gap-3 gap-5 overflow-y-auto"
-      style={{
-        scrollbarWidth: "none" /* Firefox */,
-        msOverflowStyle: "none" /* IE and Edge */,
-      }}
+      className="xs:max-h-[424px] mb:max-h-[424px] sm:max-h-450 py-2 xs:px-4 mb:px-5 px-6 grid grid-cols-2 xs:gap-3 mb:gap-3 gap-5 overflow-y-auto no-scrollbar"
     >
       {todos.length > 6 && (
         <FontAwesomeIcon
